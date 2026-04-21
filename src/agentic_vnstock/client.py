@@ -42,16 +42,15 @@ class AgenticVNStock:
             return pd.DataFrame()
 
     def get_company_overview(self, ticker: str) -> pd.DataFrame:
-        """Lấy thông tin tổng quan doanh nghiệp (Vietcap API)"""
+        """Lấy thông tin tổng quan doanh nghiệp (TCBS API)"""
         try:
-            url = f"https://mt.vietcap.com.vn/api/company/overview?symbol={ticker}"
-            res = requests.get(url, headers=self.headers, timeout=10, verify=False)
+            url = f"https://apipubaws.tcbs.com.vn/tcanalysis/v1/ticker/{ticker}/overview"
+            res = requests.get(url, headers=self.headers, timeout=10)
             if res.status_code == 200:
                 data = res.json()
-                # Vietcap API trả về array hoặc object tuỳ cấu trúc
                 if isinstance(data, list) and len(data) > 0:
                     return pd.DataFrame(data)
-                elif isinstance(data, dict):
+                elif isinstance(data, dict) and data:
                     return pd.DataFrame([data])
             return pd.DataFrame()
         except Exception:
@@ -134,14 +133,14 @@ class AgenticVNStock:
         except Exception:
             return pd.DataFrame()
     def get_company_news(self, ticker: str) -> pd.DataFrame:
-        """Lấy tin tức (Vietcap hoặc RSS)"""
+        """Lấy tin tức doanh nghiệp (VNDirect API)"""
         try:
-            url = f"https://mt.vietcap.com.vn/api/news/symbols?symbols={ticker}"
-            res = requests.get(url, headers=self.headers, timeout=10, verify=False)
+            url = f"https://finfo-api.vndirect.com.vn/v4/news?q=symbols:{ticker}&size=15"
+            res = requests.get(url, headers=self.headers, timeout=10)
             if res.status_code == 200:
                 data = res.json()
-                if isinstance(data, list):
-                    return pd.DataFrame(data)
+                if 'data' in data and isinstance(data['data'], list):
+                    return pd.DataFrame(data['data'])
             return pd.DataFrame()
         except Exception:
             return pd.DataFrame()
