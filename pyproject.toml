@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agentic-vnstock"
+version = "0.1.0"
+authors = [
+  { name="Thang Tran", email="thangtranvn@example.com" },
+]
+description = "A lightweight, agentic-ready library to fetch Vietnam stock market data."
+readme = "README.md"
+requires-python = ">=3.7"
+dependencies = [
+    "requests",
+    "pandas"
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.scripts]
+agentic-vnstock = "agentic_vnstock.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

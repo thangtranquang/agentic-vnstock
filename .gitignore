@@ -1,0 +1,14 @@
+# Môi trường ảo Python
+venv/
+env/
+.env
+
+# Thư mục build của thư viện
+build/
+dist/
+*.egg-info/
+__pycache__/
+
+# File cấu hình tạm thời
+.pytest_cache/
+.DS_Store
